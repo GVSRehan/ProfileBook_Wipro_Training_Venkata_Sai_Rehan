@@ -135,3 +135,4 @@
 /media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/obj/Debug/net8.0/ProfileBook.API.pdb
 /media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/obj/Debug/net8.0/ProfileBook.API.genruntimeconfig.cache
 /media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/obj/Debug/net8.0/ref/ProfileBook.API.dll
+/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/obj/Debug/net8.0/ProfileBook.API.sourcelink.json
