@@ -1,0 +1,6 @@
+@ProfileBook.API_HostAddress = http://localhost:5072
+
+GET {{ProfileBook.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
