@@ -10,13 +10,16 @@ namespace ProfileBook.API.Models
         [Required]
         public int SenderId { get; set; }
 
-        [Required]
-        public int ReceiverId { get; set; }
+        public int? ReceiverId { get; set; }
+
+        public int? GroupId { get; set; }
 
         [Required]
         [StringLength(500)]
         public required string MessageContent { get; set; }
 
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
+        public bool IsRead { get; set; }
+        public DateTime? ReadAt { get; set; }
     }
 }

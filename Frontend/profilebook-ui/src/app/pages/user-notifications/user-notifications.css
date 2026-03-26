@@ -1,0 +1,139 @@
+:host {
+  display: block;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding: 24px;
+  background: linear-gradient(180deg, #f6fbff 0%, #fbfcff 100%);
+  color: #172033;
+}
+
+.page-header,
+.content-card {
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 22px 54px rgba(15, 23, 42, 0.08);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 28px;
+}
+
+.page-kicker {
+  margin: 0;
+  color: #b45309;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.page-title {
+  margin: 8px 0 6px;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.page-copy,
+.notification-copy,
+.notification-time {
+  color: #64748b;
+}
+
+.page-copy {
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primary-link,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.primary-link {
+  background: linear-gradient(135deg, #0f766e, #0f172a);
+  color: #ffffff;
+}
+
+.secondary-button {
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  background: #ffffff;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.content-card {
+  margin-top: 22px;
+  padding: 22px;
+}
+
+.notification-card {
+  border: 1px solid rgba(226, 232, 240, 0.92);
+  border-radius: 22px;
+  padding: 18px;
+  background: #ffffff;
+}
+
+.notification-card + .notification-card {
+  margin-top: 12px;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.notification-unread {
+  color: #0f766e;
+}
+
+.notification-badge {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.empty-state {
+  border-radius: 20px;
+  padding: 24px 18px;
+  background: rgba(248, 250, 252, 0.82);
+  color: #64748b;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .page-shell {
+    padding: 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    border-radius: 22px;
+  }
+
+  .content-card {
+    border-radius: 22px;
+  }
+}

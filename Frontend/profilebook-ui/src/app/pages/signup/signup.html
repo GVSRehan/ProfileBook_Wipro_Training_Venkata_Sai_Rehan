@@ -1,43 +1,142 @@
+<!-- HEADER WITH PB LOGO -->
+<div class="flex items-center p-4">
+
+  <div class="bg-black text-white px-2 py-1 font-bold">P</div>
+  <div class="bg-gray-200 px-2 py-1 font-bold ml-1">B</div>
+
+  <span class="ml-2 font-bold text-lg">ProfileBook</span>
+
+</div>
+
+<!-- SIGNUP FORM -->
 <div class="flex justify-center items-center h-screen">
 
 <div class="bg-white p-8 rounded shadow w-96">
 
 <h2 class="text-2xl font-bold mb-4">Signup</h2>
 
-<input type="text"
+<!-- USERNAME -->
+<input
+type="text"
 placeholder="Username"
 [(ngModel)]="user.username"
 class="border p-2 w-full mb-3">
 
-<input type="email"
+<!-- EMAIL -->
+<input
+type="email"
 placeholder="Email"
 [(ngModel)]="user.email"
 class="border p-2 w-full mb-3">
 
-<input type="password"
+<!-- PASSWORD -->
+<div class="relative mb-2">
+
+<input
+[type]="showPassword ? 'text':'password'"
 placeholder="Password"
 [(ngModel)]="user.password"
-class="border p-2 w-full mb-3">
+class="border p-2 w-full">
 
-<input type="password"
+<button
+type="button"
+(click)="togglePassword()"
+class="absolute right-2 top-2">
+
+👁
+
+</button>
+
+</div>
+
+<!-- PASSWORD VALIDATION -->
+<div class="text-sm mb-3">
+
+<p [class.text-green-600]="hasLength()">
+✔ Minimum 8 characters
+</p>
+
+<p [class.text-green-600]="hasUppercase()">
+✔ At least 1 uppercase letter
+</p>
+
+<p [class.text-green-600]="hasSpecial()">
+✔ At least 1 special character
+</p>
+
+</div>
+
+<!-- CONFIRM PASSWORD -->
+<div class="relative mb-2">
+
+<input
+[type]="showConfirmPassword ? 'text':'password'"
 placeholder="Confirm Password"
 [(ngModel)]="user.confirmPassword"
-class="border p-2 w-full mb-3">
+class="border p-2 w-full">
 
-<input type="text"
+<button
+type="button"
+(click)="toggleConfirmPassword()"
+class="absolute right-2 top-2">
+
+👁
+
+</button>
+
+</div>
+
+<p
+class="text-sm mb-3"
+[class.text-green-600]="passwordsMatch()">
+
+✔ Passwords match
+
+</p>
+
+<!-- MOBILE -->
+<input
+type="text"
 placeholder="Mobile Number"
 [(ngModel)]="user.mobileNumber"
 class="border p-2 w-full mb-3">
 
+<p
+class="text-sm mb-3"
+[class.text-green-600]="validMobile()">
+
+✔ Valid 10 digit mobile number
+
+</p>
+
+<!-- SIGNUP BUTTON -->
 <button
 (click)="register()"
-class="bg-green-600 text-white px-4 py-2 w-full">
+[disabled]="!isFormValid()"
+class="bg-green-600 text-white px-4 py-2 w-full disabled:opacity-50">
+
 Signup
+
 </button>
 
 <p class="mt-4 text-center">
+
 Already have account?
-<a routerLink="/login" class="text-blue-500">Login</a>
+
+<a routerLink="/login" class="text-blue-500">
+
+Login
+
+</a>
+
+</p>
+
+<!-- FUTURE FEATURE -->
+<p class="text-center text-sm mt-2 text-gray-500">
+Forgot Password?
+<a routerLink="/forgot-password" class="text-blue-500">
+Reset here
+</a>
 </p>
 
 </div>

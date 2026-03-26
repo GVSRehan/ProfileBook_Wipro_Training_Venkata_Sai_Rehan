@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';  // ✅ ADD THIS
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
-  imports: [RouterModule],   // IMPORTANT
+  imports: [
+    CommonModule,
+    RouterModule      // ✅ REQUIRED for routerLink
+  ],
   templateUrl: './welcome.html',
-  styleUrl: './welcome.css'
+  styleUrls: ['./welcome.css']
 })
-export class WelcomeComponent {
-
-}
+export class WelcomeComponent {}

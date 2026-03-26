@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("profilebook-api-8c4484da-bab7-4cd7-a4c7-b28b590d1a16")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProfileBook.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1bfce2c5df3b0fb3de371fadd427355b3793da36")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44c85b9b45a1fe72b58909adf6964f48d9033f48")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProfileBook.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProfileBook.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

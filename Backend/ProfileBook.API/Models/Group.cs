@@ -12,5 +12,10 @@ namespace ProfileBook.API.Models
         public required string GroupName { get; set; }
 
         public string? GroupMembers { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [StringLength(100)]
+        public string? CreatedBy { get; set; }
     }
 }

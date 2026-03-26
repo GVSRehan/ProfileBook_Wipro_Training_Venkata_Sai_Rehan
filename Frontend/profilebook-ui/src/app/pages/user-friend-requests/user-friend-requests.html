@@ -1,0 +1,46 @@
+<div class="page-shell">
+  <header class="page-header">
+    <div>
+      <p class="page-kicker">Friend Requests</p>
+      <h1 class="page-title">Manage incoming and outgoing requests</h1>
+      <p class="page-copy">This page is only for requests, separate from the dashboard and chat view.</p>
+    </div>
+    <a routerLink="/user-dashboard" class="primary-link">Back to Dashboard</a>
+  </header>
+
+  <section class="page-grid">
+    <div class="content-card">
+      <h2 class="card-title">Incoming</h2>
+      <div *ngIf="isLoading" class="empty-state">Loading requests...</div>
+      <div *ngIf="!isLoading && incomingRequests.length === 0" class="empty-state">No incoming requests.</div>
+
+      <article *ngFor="let request of incomingRequests" class="request-card">
+        <div>
+          <strong>{{ request.senderUsername }}</strong>
+          <p class="request-copy">Sent you a request</p>
+          <small class="request-time">{{ request.createdAt | date:'medium' }}</small>
+        </div>
+        <div class="request-actions" *ngIf="request.status === 'Pending'">
+          <button type="button" class="accept-button" (click)="respondToFriendRequest(request.friendRequestId, 'accept')">Accept</button>
+          <button type="button" class="reject-button" (click)="respondToFriendRequest(request.friendRequestId, 'reject')">Reject</button>
+        </div>
+        <span *ngIf="request.status !== 'Pending'" class="status-chip">{{ request.status }}</span>
+      </article>
+    </div>
+
+    <div class="content-card">
+      <h2 class="card-title">Outgoing</h2>
+      <div *ngIf="isLoading" class="empty-state">Loading requests...</div>
+      <div *ngIf="!isLoading && outgoingRequests.length === 0" class="empty-state">No outgoing requests.</div>
+
+      <article *ngFor="let request of outgoingRequests" class="request-card">
+        <div>
+          <strong>{{ request.receiverUsername }}</strong>
+          <p class="request-copy">You sent a request</p>
+          <small class="request-time">{{ request.createdAt | date:'medium' }}</small>
+        </div>
+        <span class="status-chip">{{ request.status }}</span>
+      </article>
+    </div>
+  </section>
+</div>

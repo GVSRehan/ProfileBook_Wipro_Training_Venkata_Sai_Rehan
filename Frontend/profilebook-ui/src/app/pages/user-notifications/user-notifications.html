@@ -1,0 +1,27 @@
+<div class="page-shell">
+  <header class="page-header">
+    <div>
+      <p class="page-kicker">Notifications</p>
+      <h1 class="page-title">Your updates</h1>
+      <p class="page-copy">This page shows only notification activity, separate from the main dashboard.</p>
+    </div>
+    <div class="header-actions">
+      <button *ngIf="getUnreadCount() > 0" type="button" class="secondary-button" (click)="markAllRead()">Mark all read</button>
+      <a routerLink="/user-dashboard" class="primary-link">Back to Dashboard</a>
+    </div>
+  </header>
+
+  <section class="content-card">
+    <div *ngIf="isLoading" class="empty-state">Loading notifications...</div>
+    <div *ngIf="!isLoading && notifications.length === 0" class="empty-state">No notifications yet.</div>
+
+    <article *ngFor="let notification of notifications" class="notification-card">
+      <div class="notification-header">
+        <strong [class.notification-unread]="!notification.isRead">{{ notification.title }}</strong>
+        <span *ngIf="!notification.isRead" class="notification-badge">new</span>
+      </div>
+      <p class="notification-copy">{{ notification.message }}</p>
+      <small class="notification-time">{{ notification.createdAt | date:'medium' }}</small>
+    </article>
+  </section>
+</div>

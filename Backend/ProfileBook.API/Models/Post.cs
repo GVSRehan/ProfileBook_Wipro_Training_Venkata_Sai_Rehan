@@ -23,6 +23,15 @@ namespace ProfileBook.API.Models
         public string Status { get; set; } = "Pending";
 
         [ForeignKey("UserId")]
-        public required User User { get; set; }
+        public User? User { get; set; }
+
+        // Timestamps
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? ReviewedAt { get; set; }
+        public string? ReviewedBy { get; set; }
+
+        // Rejection reason
+        [StringLength(500)]
+        public string? RejectionReason { get; set; }
     }
 }

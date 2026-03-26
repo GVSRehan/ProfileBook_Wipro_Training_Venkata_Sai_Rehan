@@ -1,29 +1,41 @@
-import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
+import { SignupComponent } from './signup';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../shared/toast.service';
 
-@Component({
-  selector: 'app-signup',
-  standalone:true,
-  templateUrl:'./signup.html',
-  styleUrl:'./signup.css'
-})
-export class SignupComponent {
+describe('SignupComponent', () => {
+  let component: SignupComponent;
+  let fixture: ComponentFixture<SignupComponent>;
 
-  user:any={};
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SignupComponent],
+      providers: [
+        provideRouter([]),
+        {
+          provide: AuthService,
+          useValue: {
+            register: () => of({})
+          }
+        },
+        {
+          provide: ToastService,
+          useValue: {
+            success: () => undefined,
+            error: () => undefined
+          }
+        }
+      ]
+    }).compileComponents();
 
-  constructor(private auth:AuthService){}
+    fixture = TestBed.createComponent(SignupComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  register(){
-
-    this.auth.register(this.user).subscribe({
-      next:(res)=>{
-        alert("User registered successfully 👍 Please login");
-      },
-      error:(err)=>{
-        alert(err.error);
-      }
-    });
-
-  }
-
-}
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

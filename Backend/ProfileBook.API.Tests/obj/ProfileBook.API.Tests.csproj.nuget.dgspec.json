@@ -1,0 +1,189 @@
+{
+  "format": 1,
+  "restore": {
+    "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API.Tests/ProfileBook.API.Tests.csproj": {}
+  },
+  "projects": {
+    "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API.Tests/ProfileBook.API.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API.Tests/ProfileBook.API.Tests.csproj",
+        "projectName": "ProfileBook.API.Tests",
+        "projectPath": "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API.Tests/ProfileBook.API.Tests.csproj",
+        "packagesPath": "/home/sai_rehan/.nuget/packages/",
+        "outputPath": "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API.Tests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/sai_rehan/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/ProfileBook.API.csproj": {
+                "projectPath": "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/ProfileBook.API.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.6.0, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.2, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.124/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/ProfileBook.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/ProfileBook.API.csproj",
+        "projectName": "ProfileBook.API",
+        "projectPath": "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/ProfileBook.API.csproj",
+        "packagesPath": "/home/sai_rehan/.nuget/packages/",
+        "outputPath": "/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/sai_rehan/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.24, )"
+            },
+            "Microsoft.AspNetCore.SignalR": {
+              "target": "Package",
+              "version": "[1.2.9, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.124/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

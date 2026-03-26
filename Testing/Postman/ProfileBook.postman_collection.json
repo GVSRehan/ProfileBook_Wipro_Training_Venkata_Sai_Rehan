@@ -1,0 +1,227 @@
+{
+  "info": {
+    "_postman_id": "4b54c0e8-90f3-4a67-9574-a6d1df6030a1",
+    "name": "ProfileBook API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Core ProfileBook API flows for auth, posts, messaging, reporting, admin review, and groups."
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5072" },
+    { "key": "userToken", "value": "" },
+    { "key": "adminToken", "value": "" },
+    { "key": "postId", "value": "1" },
+    { "key": "reportId", "value": "1" },
+    { "key": "friendId", "value": "2" },
+    { "key": "groupId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/User/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"sampleuser\",\n  \"email\": \"sampleuser@example.com\",\n  \"password\": \"Sample@123\",\n  \"confirmPassword\": \"Sample@123\",\n  \"mobileNumber\": \"9876543210\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('userToken', json.token || json.Token || '');"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/User/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"sampleuser@example.com\",\n  \"password\": \"Sample@123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('adminToken', json.token || json.Token || '');"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/User/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"admin@example.com\",\n  \"password\": \"Admin@123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Flow",
+      "item": [
+        {
+          "name": "Get Approved Posts",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+            "url": "{{baseUrl}}/api/Post"
+          }
+        },
+        {
+          "name": "Create Post",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+            "url": "{{baseUrl}}/api/Post",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "content", "value": "Post from Postman collection", "type": "text" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/Message",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"receiverId\": {{friendId}},\n  \"messageContent\": \"Hello from Postman\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Report User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/Report",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reportedUserId\": {{friendId}},\n  \"reason\": \"Inappropriate behavior sample report\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Flow",
+      "item": [
+        {
+          "name": "Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/Admin/dashboard"
+          }
+        },
+        {
+          "name": "Get All Posts",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/Post/all"
+          }
+        },
+        {
+          "name": "Approve Post",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/Post/approve/{{postId}}",
+            "body": { "mode": "raw", "raw": "{}" }
+          }
+        },
+        {
+          "name": "Reject Post",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/Post/reject/{{postId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Rejected from Postman testing\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Reports",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/Report"
+          }
+        },
+        {
+          "name": "Take Report Action",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/Report/{{reportId}}/action",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"warn\",\n  \"adminNotes\": \"Warned via Postman test\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Group",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/Group",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"groupName\": \"Postman Test Group\",\n  \"memberUserIds\": [{{friendId}}]\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+<div class="profile-shell">
+  <header class="profile-header">
+    <div>
+      <p class="profile-kicker">User Profile</p>
+      <h1 class="profile-title">Edit your profile</h1>
+      <p class="profile-copy">Username and profile image can be updated. Email and mobile number stay locked.</p>
+    </div>
+    <a routerLink="/user-dashboard" class="back-link">Back to Dashboard</a>
+  </header>
+
+  <section class="profile-card">
+    <div class="profile-hero">
+      <div class="profile-avatar-frame">
+        <ng-container *ngIf="getProfileImageUrl(profile?.profileImage) as profileImageUrl; else profileAvatarFallback">
+          <img [src]="profileImageUrl" [alt]="form.username || 'Profile image'" class="profile-avatar-image" />
+        </ng-container>
+        <ng-template #profileAvatarFallback>
+          <div class="profile-avatar-fallback">{{ getAvatarInitial(form.username) }}</div>
+        </ng-template>
+      </div>
+
+      <div class="profile-hero-copy">
+        <h2>{{ form.username || 'Your profile' }}</h2>
+        <p>{{ form.email || 'No email available' }}</p>
+        <small>{{ form.mobileNumber || 'No mobile number available' }}</small>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <label class="profile-field">
+        <span>Username</span>
+        <input [(ngModel)]="draftProfile.username" type="text" maxlength="50" placeholder="Enter username" />
+      </label>
+
+      <label class="profile-field">
+        <span>Email</span>
+        <input [ngModel]="form.email" type="email" readonly />
+      </label>
+
+      <label class="profile-field">
+        <span>Mobile Number</span>
+        <input [ngModel]="form.mobileNumber" type="text" readonly />
+      </label>
+
+      <label class="profile-field profile-field-upload">
+        <span>Profile Image</span>
+        <label class="upload-button">
+          <input #profileImageInput type="file" accept="image/*" (change)="onProfileImageSelected($event)" />
+          <span>Choose image</span>
+        </label>
+        <small class="field-note">If no image is uploaded, the first capital letter of your username is shown.</small>
+      </label>
+    </div>
+
+    <div class="profile-actions">
+      <button type="button" class="save-button" [disabled]="isSaving" (click)="saveProfile()">
+        {{ isSaving ? 'Saving...' : 'Save Profile' }}
+      </button>
+    </div>
+  </section>
+</div>

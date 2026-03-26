@@ -1,14 +1,11 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace ProfileBook.API.DTOs
 {
     public class LoginDto
     {
-        [Required]
-        [EmailAddress]
-        public required string Email { get; set; }
+        public string? Email { get; set; }
 
-        [Required]
+        public string? Identifier { get; set; }
+
         public required string Password { get; set; }
     }
 }

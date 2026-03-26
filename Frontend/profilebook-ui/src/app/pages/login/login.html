@@ -1,28 +1,79 @@
+<!-- HEADER WITH PB LOGO -->
+<div class="flex items-center p-4">
+
+  <div class="bg-black text-white px-2 py-1 font-bold">P</div>
+  <div class="bg-gray-200 px-2 py-1 font-bold ml-1">B</div>
+
+  <span class="ml-2 font-bold text-lg">ProfileBook</span>
+
+</div>
+
+<!-- LOGIN FORM -->
 <div class="flex justify-center items-center h-screen">
 
 <div class="bg-white p-8 rounded shadow w-96">
 
 <h2 class="text-2xl font-bold mb-4">Login</h2>
 
-<input type="email"
-placeholder="Email"
-[(ngModel)]="loginData.email"
+<!-- LOGIN IDENTIFIER -->
+<input
+type="text"
+placeholder="Email / Username / Mobile Number"
+[(ngModel)]="loginData.identifier"
 class="border p-2 w-full mb-3">
 
-<input type="password"
+<!-- PASSWORD WITH EYE BUTTON -->
+<div class="relative mb-3">
+
+<input
+[type]="showPassword ? 'text':'password'"
 placeholder="Password"
 [(ngModel)]="loginData.password"
-class="border p-2 w-full mb-3">
+class="border p-2 w-full">
 
 <button
-(click)="login()"
-class="bg-black text-white px-4 py-2 w-full">
-Login
+type="button"
+(click)="togglePassword()"
+class="absolute right-2 top-2">
+
+👁
+
 </button>
 
+</div>
+
+<!-- LOGIN BUTTON -->
+<button
+(click)="login()"
+[disabled]="isSubmitting"
+class="bg-black text-white px-4 py-2 w-full">
+
+{{ isSubmitting ? 'Logging in...' : 'Login' }}
+
+</button>
+
+<!-- FORGOT PASSWORD -->
+<p class="text-right mt-2">
+
+<a routerLink="/forgot-password" class="text-blue-500 text-sm">
+
+Forgot Password?
+
+</a>
+
+</p>
+
+<!-- SIGNUP -->
 <p class="mt-4 text-center">
+
 Don't have account?
-<a routerLink="/signup" class="text-blue-500">Signup</a>
+
+<a routerLink="/signup" class="text-blue-500">
+
+Signup
+
+</a>
+
 </p>
 
 </div>

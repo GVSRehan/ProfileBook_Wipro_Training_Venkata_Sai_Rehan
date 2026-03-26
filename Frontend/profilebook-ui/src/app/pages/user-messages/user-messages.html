@@ -1,0 +1,125 @@
+<div class="messages-shell">
+  <header class="page-header">
+    <div>
+      <p class="page-kicker">Messages</p>
+      <h1 class="page-title">All conversations in one place</h1>
+      <p class="page-copy">Friends and groups are mixed together, with the most recent conversation at the top.</p>
+    </div>
+    <a routerLink="/user-dashboard" class="back-link">Back to Dashboard</a>
+  </header>
+
+  <div class="messages-layout">
+    <aside class="conversation-sidebar">
+      <label class="field-label" for="conversation-search">Search connected friends</label>
+      <input
+        id="conversation-search"
+        [(ngModel)]="searchTerm"
+        type="text"
+        placeholder="Search conversations"
+        class="search-input" />
+
+      <div class="conversation-list">
+        <button
+          *ngFor="let item of getVisibleConversationItems()"
+          type="button"
+          class="conversation-item"
+          [class.conversation-item-active]="isConversationSelected(item)"
+          (click)="selectConversation(item)">
+          <div class="conversation-avatar-wrap">
+            <ng-container *ngIf="getConversationImageUrl(item) as conversationImage; else conversationAvatarFallback">
+              <img [src]="conversationImage" [alt]="item.name" class="conversation-avatar conversation-avatar-image" />
+            </ng-container>
+            <ng-template #conversationAvatarFallback>
+              <div class="conversation-avatar">{{ getAvatarInitial(item.name) }}</div>
+            </ng-template>
+          </div>
+          <div class="conversation-text">
+            <div class="conversation-name-row">
+              <strong>{{ item.name }}</strong>
+              <span class="conversation-kind">{{ item.type === 'group' ? 'Group' : 'Friend' }}</span>
+            </div>
+            <div class="conversation-preview">{{ item.preview }}</div>
+          </div>
+          <div class="conversation-meta">
+            <small *ngIf="item.lastMessageAt">{{ item.lastMessageAt | date:'shortTime' }}</small>
+            <span *ngIf="item.unreadCount > 0" class="conversation-badge">{{ item.unreadCount }}</span>
+          </div>
+        </button>
+
+        <div *ngIf="getVisibleConversationItems().length === 0" class="empty-state">
+          No conversations found.
+        </div>
+      </div>
+    </aside>
+
+    <section class="chat-surface">
+      <div class="chat-header">
+        <div class="chat-header-main">
+          <ng-container *ngIf="getSelectedConversationImageUrl() as selectedConversationImage; else selectedConversationFallback">
+            <img [src]="selectedConversationImage" [alt]="getSelectedConversationName()" class="chat-header-avatar chat-header-avatar-image" />
+          </ng-container>
+          <ng-template #selectedConversationFallback>
+            <div class="chat-header-avatar">{{ getAvatarInitial(getSelectedConversationName()) }}</div>
+          </ng-template>
+          <div>
+            <p class="chat-title">{{ getSelectedConversationName() }}</p>
+            <small class="chat-subtitle">
+              {{ selectedChatType === 'group' ? 'Group conversation' : 'Direct conversation' }}
+            </small>
+          </div>
+        </div>
+        <div *ngIf="getLastOwnMessageReadState()" class="read-pill">
+          {{ getLastOwnMessageReadState() }}
+        </div>
+      </div>
+
+      <div *ngIf="isTypingForSelectedFriend()" class="typing-banner">
+        {{ typingUsername }} is typing...
+      </div>
+
+      <div class="chat-feed">
+        <div *ngIf="conversationMessages.length === 0" class="empty-state">
+          {{ chatStatus || 'Select a conversation to start messaging.' }}
+        </div>
+
+        <div
+          *ngFor="let message of conversationMessages"
+          class="bubble-row"
+          [class.bubble-row-own]="isOwnMessage(message)">
+          <ng-container *ngIf="getSenderProfileImageUrl(message) as senderProfileImage; else senderAvatarFallback">
+            <img [src]="senderProfileImage" [alt]="getSenderName(message)" class="bubble-avatar bubble-avatar-image" />
+          </ng-container>
+          <ng-template #senderAvatarFallback>
+            <div class="bubble-avatar">{{ getAvatarInitial(isOwnMessage(message) ? currentUserProfile?.username : getSenderName(message)) }}</div>
+          </ng-template>
+          <div class="bubble" [class.bubble-own]="isOwnMessage(message)">
+            <div class="bubble-author">
+              {{ isOwnMessage(message) ? 'You' : getSenderName(message) }}
+            </div>
+            <div>{{ message.messageContent }}</div>
+            <div class="bubble-time">{{ message.timeStamp | date:'short' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-compose">
+        <textarea
+          [(ngModel)]="newMessageContent"
+          (input)="handleMessageInput()"
+          placeholder="Type your message"
+          class="compose-box"
+          rows="3"></textarea>
+        <div class="compose-actions">
+          <span class="compose-hint">Search helps you jump to connected friends quickly.</span>
+          <button
+            type="button"
+            class="send-button"
+            [disabled]="!canSendCurrentMessage()"
+            (click)="sendMessage()">
+            Send
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

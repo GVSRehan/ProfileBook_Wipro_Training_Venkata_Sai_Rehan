@@ -1,1 +1,71 @@
-<p>review-posts works!</p>
+<div class="min-h-screen bg-gray-100">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Review Posts</h1>
+    <button (click)="backToDashboard()" class="bg-gray-500 text-white px-4 py-2 rounded">Back to Dashboard</button>
+  </header>
+
+  <div class="p-4">
+    <div class="space-y-4">
+      <div *ngIf="isLoading" class="bg-white p-6 rounded shadow text-center text-gray-500">
+        <p>Loading pending posts...</p>
+      </div>
+
+      <div *ngIf="loadError" class="bg-red-50 border border-red-200 text-red-700 p-4 rounded shadow">
+        <p><strong>Failed to load posts:</strong> {{ loadError }}</p>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-200 text-blue-700 p-4 rounded shadow">
+        <p><strong>Total posts from admin API:</strong> {{ rawPostCount }}</p>
+        <p><strong>Pending posts after filter:</strong> {{ posts.length }}</p>
+      </div>
+
+      <div *ngIf="posts.length === 0" class="bg-white p-6 rounded shadow text-center text-gray-500">
+        <p>No pending posts to review</p>
+      </div>
+      
+      <div *ngFor="let post of posts; trackBy: trackByPostId" class="bg-white p-4 rounded shadow">
+        <p class="mb-2"><strong>Content:</strong> {{ post.content }}</p>
+        <img *ngIf="post.postImage" [src]="'http://localhost:5072' + post.postImage" alt="Post image" class="mb-3 rounded max-h-60 object-cover" />
+        <p class="mb-2"><strong>Post ID:</strong> {{ post.postId }}</p>
+        <p class="mb-2"><strong>User ID:</strong> {{ post.userId }}</p>
+        <p class="mb-4"><strong>Created:</strong> {{ post.createdAt | date }}</p>
+        <div class="flex gap-2">
+          <button (click)="approvePost(post.postId)" [disabled]="isSubmitting" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed">Approve</button>
+          <button (click)="openRejectionForm(post.postId)" [disabled]="isSubmitting" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed">Reject</button>
+          <button (click)="deletePost(post.postId)" [disabled]="isSubmitting" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rejection Form Modal -->
+  <div *ngIf="showRejectionForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded shadow-lg max-w-md w-full">
+      <h3 class="font-bold text-lg mb-4">Reject Post</h3>
+      
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Rejection Reason</label>
+        <textarea
+          [(ngModel)]="rejectionReason"
+          placeholder="Explain why this post is being rejected..."
+          class="border border-gray-300 p-2 w-full rounded" 
+          rows="4"></textarea>
+      </div>
+
+      <div class="flex gap-2 justify-end">
+        <button
+          (click)="cancelRejection()"
+          [disabled]="isSubmitting"
+          class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+          Cancel
+        </button>
+        <button
+          (click)="rejectPost()"
+          [disabled]="isSubmitting"
+          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+          {{ isSubmitting ? 'Processing...' : 'Confirm Rejection' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,156 @@
+:host {
+  display: block;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding: 24px;
+  background: linear-gradient(180deg, #f6fbff 0%, #fbfcff 100%);
+  color: #172033;
+}
+
+.page-header,
+.content-card {
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 22px 54px rgba(15, 23, 42, 0.08);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 28px;
+}
+
+.page-kicker {
+  margin: 0;
+  color: #b45309;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.page-title {
+  margin: 8px 0 6px;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.page-copy,
+.request-copy,
+.request-time {
+  color: #64748b;
+}
+
+.page-copy {
+  margin: 0;
+}
+
+.primary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #0f766e, #0f172a);
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.page-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.content-card {
+  padding: 22px;
+}
+
+.card-title {
+  margin: 0 0 16px;
+}
+
+.request-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(226, 232, 240, 0.92);
+  background: #ffffff;
+}
+
+.request-card + .request-card {
+  margin-top: 12px;
+}
+
+.request-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.accept-button,
+.reject-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.accept-button {
+  background: linear-gradient(135deg, #0f766e, #0f172a);
+  color: #ffffff;
+}
+
+.reject-button {
+  background: #fff1f2;
+  color: #9f1239;
+}
+
+.status-chip {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #e2e8f0;
+  color: #334155;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.empty-state {
+  border-radius: 20px;
+  padding: 24px 18px;
+  background: rgba(248, 250, 252, 0.82);
+  color: #64748b;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .page-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 720px) {
+  .page-shell {
+    padding: 16px;
+  }
+
+  .page-header,
+  .content-card {
+    border-radius: 22px;
+  }
+}

@@ -1,6 +1,138 @@
-@ProfileBook.API_HostAddress = http://localhost:5072
+@ProfileBook.API_HostAddress = http://localhost:5000
 
-GET {{ProfileBook.API_HostAddress}}/weatherforecast/
-Accept: application/json
+### ========================================
+### MAIN ADMIN - NEVER DEACTIVATES OR EXPIRES
+### ========================================
+
+# Login as Main Admin (Gurram Venkata Sai Rehan)
+# Notice: credentialsExpireAt = null, daysUntilExpiration = null, isMainAdmin = true
+POST {{ProfileBook.API_HostAddress}}/api/user/login
+Content-Type: application/json
+
+{
+  "email": "venkatasairehangurram@gmail.com",
+  "password": "GVSR12@19"
+}
+
+###
+
+### ========================================
+### SET A USER AS MAIN ADMIN
+### ========================================
+
+# Set UserId as main admin - only one main admin allowed
+POST {{ProfileBook.API_HostAddress}}/api/admin/set-main-admin/3
+
+###
+
+### ========================================
+### CHILD ADMIN - EXPIRES BASED ON DURATION
+### ========================================
+
+# Create Child Admin with Duration Option
+POST {{ProfileBook.API_HostAddress}}/api/admin/create-admin
+Content-Type: application/json
+
+{
+  "username": "TestChildAdmin",
+  "email": "testchild@example.com",
+  "password": "Admin@123",
+  "mobileNumber": "9123456789",
+  "durationOption": 1
+}
+
+###
+
+# Get Duration Options
+GET {{ProfileBook.API_HostAddress}}/api/admin/duration-options
+
+###
+
+### ========================================
+### CREDENTIAL MONITORING
+### ========================================
+
+# Get Users (Admin View with IsMainAdmin flag)
+GET {{ProfileBook.API_HostAddress}}/api/admin/users
+
+###
+
+# Get Credentials Expiring Soon (Main admin excluded)
+GET {{ProfileBook.API_HostAddress}}/api/admin/expiring-credentials?daysAhead=30
+
+###
+
+# Get Expired Credentials (Main admin never appears here)
+GET {{ProfileBook.API_HostAddress}}/api/admin/expired-credentials
+
+###
+
+# Deactivate Expired Credentials (Main admin will never be deactivated)
+POST {{ProfileBook.API_HostAddress}}/api/admin/deactivate-expired
+
+###
+
+### ========================================
+### EXTEND CREDENTIALS
+### ========================================
+
+# Extend Child Admin Credentials
+POST {{ProfileBook.API_HostAddress}}/api/admin/extend-credentials/3004
+Content-Type: application/json
+
+1440
+
+###
+
+### ========================================
+### CREATE USERS
+### ========================================
+
+# Create User with Duration
+POST {{ProfileBook.API_HostAddress}}/api/admin/create-user
+Content-Type: application/json
+
+{
+  "username": "regularuser",
+  "email": "user@example.com",
+  "password": "User@123",
+  "mobileNumber": "9876543210",
+  "durationOption": 3
+}
+
+###
+
+### ========================================
+### POST MANAGEMENT
+### ========================================
+
+# Create a Post
+POST {{ProfileBook.API_HostAddress}}/api/post
+Content-Type: application/json
+
+{
+  "userId": 3,
+  "content": "This post needs admin approval"
+}
+
+###
+
+# Get Approved Posts (Users feed)
+GET {{ProfileBook.API_HostAddress}}/api/post
+
+###
+
+# Get Pending Posts (Admin approval list)
+GET {{ProfileBook.API_HostAddress}}/api/post/pending
+
+###
+
+# Approve Post
+PUT {{ProfileBook.API_HostAddress}}/api/post/approve/1
+
+###
+
+# Reject Post
+PUT {{ProfileBook.API_HostAddress}}/api/post/reject/1
 
 ###

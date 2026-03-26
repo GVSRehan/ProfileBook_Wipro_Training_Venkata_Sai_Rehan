@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ProfileBook Placeholders</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .shell {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 32px 20px 48px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #0f766e;
+            font-weight: 600;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #dbe2ea;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .grid.two {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field input,
+        .field textarea {
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            font: inherit;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: #0f766e;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            border: 0;
+        }
+
+        .muted {
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <header class="header">
+            <div class="brand">ProfileBook MVC Placeholders</div>
+            <nav class="nav">
+                <a href="/placeholders">Index</a>
+                <a href="/placeholders/login">Login</a>
+                <a href="/placeholders/register">Register</a>
+                <a href="/placeholders/posts">Posts</a>
+                <a href="/placeholders/messages">Messages</a>
+                <a href="/swagger">Swagger</a>
+            </nav>
+        </header>
+
+        <main class="card">
+            @RenderBody()
+        </main>
+    </div>
+</body>
+</html>

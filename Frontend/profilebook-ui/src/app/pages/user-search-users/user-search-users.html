@@ -1,0 +1,52 @@
+<div class="page-shell">
+  <header class="page-header">
+    <div>
+      <p class="page-kicker">Search Users</p>
+      <h1 class="page-title">Find people and send requests</h1>
+      <p class="page-copy">This page is dedicated to user search, without mixing in posts or chat.</p>
+    </div>
+    <a routerLink="/user-dashboard" class="primary-link">Back to Dashboard</a>
+  </header>
+
+  <section class="content-card">
+    <label class="field-label" for="user-search">Search users</label>
+    <input
+      id="user-search"
+      [(ngModel)]="searchTerm"
+      type="text"
+      placeholder="Search by username or email"
+      class="search-input" />
+
+    <div class="results">
+      <div *ngIf="isLoading" class="empty-state">Loading users...</div>
+      <div *ngIf="!isLoading && getFilteredUsers().length === 0" class="empty-state">No users match this search.</div>
+
+      <article *ngFor="let user of getFilteredUsers()" class="user-card">
+        <div class="user-main">
+          <div class="user-avatar">{{ (user.username || '?').charAt(0).toUpperCase() }}</div>
+          <div>
+            <strong>{{ user.username }}</strong>
+            <p class="user-copy">{{ user.email }}</p>
+          </div>
+        </div>
+        <div class="user-actions">
+          <button
+            *ngIf="canSendFriendRequest(user.userId)"
+            type="button"
+            class="primary-button"
+            (click)="sendFriendRequest(user.userId)">
+            Add Friend
+          </button>
+          <button
+            *ngIf="!canSendFriendRequest(user.userId)"
+            type="button"
+            disabled
+            class="disabled-button">
+            {{ getFriendActionLabel(user.userId) }}
+          </button>
+          <button type="button" class="secondary-button" (click)="reportUser(user.userId)">Report</button>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>

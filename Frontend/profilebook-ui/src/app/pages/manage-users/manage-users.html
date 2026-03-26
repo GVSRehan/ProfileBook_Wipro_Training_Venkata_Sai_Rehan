@@ -1,1 +1,85 @@
-<p>manage-users works!</p>
+<div class="min-h-screen bg-gray-100">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Manage Users</h1>
+    <div>
+      <button (click)="toggleCreateUser()" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Create User</button>
+      <button (click)="backToDashboard()" class="bg-gray-500 text-white px-4 py-2 rounded">Back to Dashboard</button>
+    </div>
+  </header>
+
+  <div class="p-4">
+    <!-- Create User Form -->
+    <div *ngIf="showCreateUser" class="bg-white p-4 rounded shadow mb-4">
+      <h2 class="text-xl font-semibold mb-4">Create New User</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <input [(ngModel)]="newUser.username" placeholder="Username" class="border p-2 rounded" />
+        <input [(ngModel)]="newUser.email" placeholder="Email" class="border p-2 rounded" />
+        <input [(ngModel)]="newUser.mobileNumber" placeholder="Mobile Number" class="border p-2 rounded" />
+        <input [(ngModel)]="newUser.password" type="password" placeholder="Password" class="border p-2 rounded" />
+      </div>
+      <div class="mt-4">
+        <button (click)="createUser()" class="bg-green-500 text-white px-4 py-2 rounded">Create</button>
+        <button (click)="toggleCreateUser()" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>
+      </div>
+    </div>
+
+    <div *ngIf="showEditUser" class="bg-white p-4 rounded shadow mb-4">
+      <h2 class="text-xl font-semibold mb-4">Edit User</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <input [(ngModel)]="editUserForm.username" placeholder="Username" class="border p-2 rounded" />
+        <input [(ngModel)]="editUserForm.email" placeholder="Email" class="border p-2 rounded" />
+        <input [(ngModel)]="editUserForm.mobileNumber" placeholder="Mobile Number" class="border p-2 rounded" />
+        <input [(ngModel)]="editUserForm.password" type="password" placeholder="New Password (optional)" class="border p-2 rounded" />
+      </div>
+      <label class="flex items-center gap-2 mt-4 text-sm">
+        <input type="checkbox" [(ngModel)]="editUserForm.isActive" />
+        Active
+      </label>
+      <div class="mt-4">
+        <button (click)="updateUser()" class="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+        <button (click)="closeEditUser()" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="bg-white rounded shadow">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="p-4 text-left">ID</th>
+            <th class="p-4 text-left">Username</th>
+            <th class="p-4 text-left">Email</th>
+            <th class="p-4 text-left">Mobile</th>
+            <th class="p-4 text-left">Role</th>
+            <th class="p-4 text-left">Status</th>
+            <th class="p-4 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of users" class="border-t">
+            <td class="p-4">{{ u.userId }}</td>
+            <td class="p-4">{{ u.username }}</td>
+            <td class="p-4">{{ u.email }}</td>
+            <td class="p-4">{{ u.mobileNumber || '-' }}</td>
+            <td class="p-4">{{ u.role }}</td>
+            <td class="p-4">{{ u.isActive ? 'Active' : 'Inactive' }}</td>
+            <td class="p-4">
+              <button
+                (click)="openEditUser(u)"
+                [disabled]="u.isMainAdmin"
+                class="bg-blue-500 text-white px-3 py-1 rounded text-sm mr-2 disabled:bg-gray-300 disabled:cursor-not-allowed">
+                Edit
+              </button>
+              <button
+                (click)="deleteUser(u)"
+                [disabled]="u.isMainAdmin"
+                class="bg-red-500 text-white px-3 py-1 rounded text-sm disabled:bg-gray-300 disabled:cursor-not-allowed">
+                {{ u.isMainAdmin ? 'Protected' : 'Delete' }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

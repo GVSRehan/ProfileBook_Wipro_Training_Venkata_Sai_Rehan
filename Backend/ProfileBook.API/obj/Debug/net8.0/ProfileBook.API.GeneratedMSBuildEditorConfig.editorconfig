@@ -17,3 +17,35 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = /media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API
 build_property._RazorSourceGeneratorDebug = 
+
+[/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/Views/Placeholder/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhY2Vob2xkZXIvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/Views/Placeholder/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhY2Vob2xkZXIvTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/Views/Placeholder/Messages.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhY2Vob2xkZXIvTWVzc2FnZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/Views/Placeholder/Posts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhY2Vob2xkZXIvUG9zdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/Views/Placeholder/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhY2Vob2xkZXIvUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/media/sai_rehan/141452C31452A78E/ProfileBook/Backend/ProfileBook.API/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

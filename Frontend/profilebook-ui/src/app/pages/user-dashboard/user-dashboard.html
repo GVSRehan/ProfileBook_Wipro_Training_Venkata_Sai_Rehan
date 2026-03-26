@@ -1,1 +1,294 @@
-<p>user-dashboard works!</p>
+<div class="dashboard-shell">
+  <div class="chat-notification-stack">
+    <div *ngFor="let notification of chatNotifications" class="chat-notification-toast">
+      {{ notification.text }}
+    </div>
+  </div>
+
+  <header class="dashboard-header">
+    <div class="brand-block">
+      <div class="brand-mark">PB</div>
+      <div>
+        <p class="brand-kicker">Dashboard</p>
+        <h1 class="brand-title">ProfileBook</h1>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <a routerLink="/user/profile" class="profile-pill">
+        <ng-container *ngIf="getProfileImageUrl(currentUserProfile?.profileImage) as currentUserImage; else currentUserAvatarFallback">
+          <img [src]="currentUserImage" [alt]="currentUserProfile?.username || 'Your profile'" class="profile-pill-avatar avatar-image" />
+        </ng-container>
+        <ng-template #currentUserAvatarFallback>
+          <span class="profile-pill-avatar">{{ getAvatarInitial(currentUserProfile?.username) }}</span>
+        </ng-template>
+        <span class="profile-pill-copy">
+          <strong>{{ currentUserProfile?.username || 'Profile' }}</strong>
+          <small>Edit profile</small>
+        </span>
+      </a>
+
+      <button
+        *ngIf="notificationPermission !== 'granted' && notificationPermission !== 'unsupported'"
+        (click)="requestNotificationPermission()"
+        class="header-secondary-action">
+        Enable Notifications
+      </button>
+      <button (click)="logout()" class="header-primary-action">Logout</button>
+    </div>
+  </header>
+
+  <section class="action-strip compact-action-strip">
+    <a routerLink="/user/messages" class="action-tile dashboard-link-tile">
+      <div class="action-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 5h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8l-4 4V7a2 2 0 0 1 2-2Z" />
+        </svg>
+      </div>
+      <div class="action-copy">
+        <span class="action-label">Messages</span>
+        <span class="action-detail">Open chats page</span>
+      </div>
+      <span class="action-count" *ngIf="getTotalUnreadMessages() > 0">{{ getTotalUnreadMessages() }}</span>
+    </a>
+
+    <a routerLink="/user/notifications" class="action-tile dashboard-link-tile">
+      <div class="action-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3a4 4 0 0 0-4 4v1.17A5.99 5.99 0 0 0 6 13v3l-2 2v1h16v-1l-2-2v-3a5.99 5.99 0 0 0-2-4.83V7a4 4 0 0 0-4-4Zm0 19a3 3 0 0 0 2.82-2H9.18A3 3 0 0 0 12 22Z" />
+        </svg>
+      </div>
+      <div class="action-copy">
+        <span class="action-label">Notifications</span>
+        <span class="action-detail">Open updates page</span>
+      </div>
+      <span class="action-count" *ngIf="getUnreadNotificationCount() > 0">{{ getUnreadNotificationCount() }}</span>
+    </a>
+
+    <a routerLink="/user/friend-requests" class="action-tile dashboard-link-tile">
+      <div class="action-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm6 1a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm0 2c-2.33 0-7 1.17-7 3.5V20h10v-2.5c0-.68-.24-1.3-.65-1.86A9.42 9.42 0 0 0 15 14Zm-6-1c-2.67 0-8 1.34-8 4v3h6v-2.5c0-1.3.56-2.45 1.52-3.37A8.56 8.56 0 0 1 9 13Z" />
+        </svg>
+      </div>
+      <div class="action-copy">
+        <span class="action-label">Friend Requests</span>
+        <span class="action-detail">Open requests page</span>
+      </div>
+      <span class="action-count" *ngIf="getPendingFriendRequestCount() > 0">{{ getPendingFriendRequestCount() }}</span>
+    </a>
+
+    <a routerLink="/user/search-users" class="action-tile dashboard-link-tile">
+      <div class="action-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 4.68 13.36l4.73 4.73 1.41-1.41-4.73-4.73A7.5 7.5 0 0 0 10.5 3Zm0 2a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Z" />
+        </svg>
+      </div>
+      <div class="action-copy">
+        <span class="action-label">Search Users</span>
+        <span class="action-detail">Open search page</span>
+      </div>
+      <span class="action-count action-count-muted">{{ visibleUsers.length }}</span>
+    </a>
+  </section>
+
+  <section class="compact-alerts">
+    <div class="panel-header">
+      <div>
+        <p class="section-kicker">ProfileBook</p>
+        <h3 class="panel-title">Alerts by PB</h3>
+      </div>
+      <p class="panel-copy">Latest alert messages stay visible here, and urgent ones still trigger sound and notifications.</p>
+    </div>
+
+    <div *ngIf="alerts.length === 0" class="empty-state">No admin alerts right now.</div>
+
+    <div class="alerts-mini-list" *ngIf="alerts.length > 0">
+      <article *ngFor="let alert of alerts | slice:0:3" class="info-card info-card-warm">
+        <div class="info-card-header">
+          <strong>{{ alert.adminUsername || 'Admin' }}</strong>
+          <span class="info-chip">Alert</span>
+        </div>
+        <p class="info-card-copy">{{ alert.content }}</p>
+        <small class="info-card-time">{{ alert.createdAt | date:'medium' }}</small>
+      </article>
+    </div>
+  </section>
+
+  <section class="feed-shell">
+    <div class="composer-card">
+      <div class="panel-header">
+        <div>
+          <p class="section-kicker">Create post</p>
+          <h3 class="panel-title">Share something new</h3>
+        </div>
+        <p class="panel-copy">Posts stay on the dashboard, while messages and other actions open separate pages.</p>
+      </div>
+
+      <textarea
+        [(ngModel)]="newPost.content"
+        placeholder="What's on your mind?"
+        class="dashboard-textarea"
+        rows="4"></textarea>
+
+      <div class="composer-toolbar">
+        <label class="upload-button">
+          <input #postImageInput type="file" accept="image/*" (change)="onPostImageSelected($event)" />
+          <span>Add image</span>
+        </label>
+        <button (click)="createPost()" class="publish-button">Submit for review</button>
+      </div>
+
+      <div *ngIf="selectedPostImageFile" class="selected-file">
+        Selected: {{ selectedPostImageFile.name }}
+      </div>
+
+      <img
+        *ngIf="postImagePreviewUrl"
+        [src]="postImagePreviewUrl"
+        alt="Selected post preview"
+        class="composer-preview" />
+    </div>
+
+    <div class="feed-header">
+      <div>
+        <p class="section-kicker">Posts</p>
+        <h3 class="panel-title">Approved feed</h3>
+      </div>
+      <div class="feed-header-tools">
+        <input
+          [(ngModel)]="postSearchTerm"
+          (ngModelChange)="onPostSearchChange()"
+          type="text"
+          placeholder="Search posts or usernames"
+          class="dashboard-input feed-search-input" />
+        <p class="panel-copy">Posts stay below the icon row, with image first and text after it.</p>
+      </div>
+    </div>
+
+    <div *ngIf="posts.length === 0" class="empty-state feed-empty">
+      No approved posts yet. Publish one to get the feed moving.
+    </div>
+
+    <article *ngFor="let post of posts" class="post-card">
+      <div class="post-header">
+        <ng-container *ngIf="getProfileImageUrl(post.profileImage) as postAuthorImage; else postAuthorFallback">
+          <img [src]="postAuthorImage" [alt]="post.username" class="user-avatar post-avatar avatar-image" />
+        </ng-container>
+        <ng-template #postAuthorFallback>
+          <div class="user-avatar post-avatar">{{ getAvatarInitial(post.username) }}</div>
+        </ng-template>
+        <div>
+          <h4 class="post-author">{{ post.username }}</h4>
+          <p class="post-time">{{ post.createdAt | date:'medium' }}</p>
+        </div>
+      </div>
+
+      <img
+        *ngIf="getPostImageUrl(post) as imageUrl"
+        [src]="imageUrl"
+        alt="Post image"
+        class="post-media" />
+
+      <p *ngIf="post.content" class="post-copy">{{ post.content }}</p>
+
+      <div class="post-actions">
+        <button
+          type="button"
+          class="post-action"
+          [class.post-action-active]="isPostLiked(post.postId)"
+          (click)="togglePostLike(post)">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s-7-4.35-9.33-8.08A5.68 5.68 0 0 1 7.52 4a5.4 5.4 0 0 1 4.48 2.44A5.4 5.4 0 0 1 16.48 4a5.68 5.68 0 0 1 4.85 8.92C19 16.65 12 21 12 21Z" />
+          </svg>
+          <span>Like {{ post.likeCount }}</span>
+        </button>
+
+        <button
+          type="button"
+          class="post-action"
+          [class.post-action-active]="isCommentsOpen(post.postId)"
+          (click)="toggleComments(post.postId)">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 5h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8l-4 4V7a2 2 0 0 1 2-2Z" />
+          </svg>
+          <span>Comment {{ post.commentCount }}</span>
+        </button>
+
+        <div class="share-box">
+          <button type="button" class="post-action" (click)="toggleShareMenu(post.postId)">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18 8a3 3 0 1 0-2.82-4H15a3 3 0 0 0 .18 1l-7.16 3.58a3 3 0 1 0 0 6.84l7.16 3.58A3 3 0 1 0 16 18a3 3 0 0 0-.82-2.05l-7.16-3.58a3.18 3.18 0 0 0 0-.74l7.16-3.58A3 3 0 0 0 18 8Z" />
+            </svg>
+            <span>Share {{ post.shareCount }}</span>
+          </button>
+
+          <div *ngIf="shareMenuPostId === post.postId" class="share-menu">
+            <div class="share-menu-title">Share to a friend</div>
+            <input
+              [(ngModel)]="shareSearchTerm"
+              type="text"
+              placeholder="Search friends"
+              class="dashboard-input share-search" />
+
+            <button
+              *ngFor="let friend of getFilteredShareFriends()"
+              type="button"
+              class="share-friend-button"
+              (click)="sharePostWithFriend(post, friend.userId)">
+              <span>{{ friend.username }}</span>
+              <span class="share-friend-meta">Send post</span>
+            </button>
+
+            <div *ngIf="getFilteredShareFriends().length === 0" class="empty-state small-state">
+              No friends match this search.
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="post-action post-action-danger" (click)="reportUser(post.userId)">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 3h9l3 3v15l-6-3-6 3V3Zm2 2v12.76l4-2 4 2V7h-3V5H8Z" />
+          </svg>
+          <span>Report</span>
+        </button>
+      </div>
+
+      <section *ngIf="isCommentsOpen(post.postId)" class="comment-panel">
+        <div class="comment-panel-header">
+          <h5>Comments</h5>
+          <span>{{ post.commentCount }}</span>
+        </div>
+
+        <div *ngIf="post.comments.length === 0" class="empty-state small-state comment-empty-state">
+          No comments yet. Start the conversation.
+        </div>
+
+        <div *ngIf="post.comments.length > 0" class="comment-list">
+          <article *ngFor="let comment of post.comments" class="comment-item">
+            <div class="comment-item-header">
+              <strong class="comment-author">{{ comment.username }}</strong>
+              <span class="comment-time">{{ comment.createdAt | date:'short' }}</span>
+            </div>
+            <p class="comment-copy">{{ comment.commentText }}</p>
+          </article>
+        </div>
+
+        <div class="comment-compose">
+          <textarea
+            class="dashboard-textarea comment-textarea"
+            rows="3"
+            placeholder="Write a comment"
+            [ngModel]="commentDrafts[post.postId] || ''"
+            (ngModelChange)="commentDrafts[post.postId] = $event"></textarea>
+
+          <div class="comment-compose-actions">
+            <button type="button" class="publish-button comment-submit" (click)="submitComment(post)">
+              Post comment
+            </button>
+          </div>
+        </div>
+      </section>
+    </article>
+  </section>
+</div>

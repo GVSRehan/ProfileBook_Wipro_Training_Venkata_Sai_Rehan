@@ -1,0 +1,51 @@
+<div class="min-h-screen bg-gray-100">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Groups</h1>
+    <button (click)="backToDashboard()" class="bg-gray-500 text-white px-4 py-2 rounded">Back to Dashboard</button>
+  </header>
+
+  <div class="p-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="text-xl font-semibold mb-4">Create Group</h2>
+      <input [(ngModel)]="newGroup.groupName" placeholder="Group name" class="border p-2 rounded w-full mb-4" />
+      <div *ngIf="isLoadingUsers" class="text-sm text-gray-500 mb-3">Loading users...</div>
+      <div class="max-h-72 overflow-y-auto border rounded p-3 space-y-2">
+        <label *ngFor="let user of users; trackBy: trackByUserId" class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            [checked]="newGroup.memberUserIds.includes(user.userId)"
+            (change)="onMemberToggle(user.userId, $any($event.target).checked)" />
+          <span>{{ user.username }} ({{ user.email }})</span>
+        </label>
+      </div>
+      <button
+        (click)="createGroup()"
+        [disabled]="isCreatingGroup"
+        class="bg-blue-600 text-white px-4 py-2 rounded mt-4 disabled:opacity-60 disabled:cursor-not-allowed">
+        {{ isCreatingGroup ? 'Creating...' : 'Create Group' }}
+      </button>
+    </div>
+
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="text-xl font-semibold mb-4">Existing Groups</h2>
+      <div *ngIf="isLoadingGroups" class="text-gray-500 mb-3">Loading groups...</div>
+      <div *ngIf="groups.length === 0" class="text-gray-500">No groups created yet</div>
+      <div *ngFor="let group of groups; trackBy: trackByGroupId" class="border rounded p-3 mb-3">
+        <div class="flex justify-between items-start gap-4">
+          <div>
+            <p class="font-semibold">{{ group.groupName }}</p>
+            <p class="text-sm text-gray-500">Created {{ group.createdAt | date:'medium' }}</p>
+            <p class="text-sm text-gray-600 mt-2">
+              Members:
+              <span *ngIf="group.memberUserIds?.length === 0">No users</span>
+              <span *ngIf="group.memberUserIds?.length > 0">
+                {{ getGroupMemberNames(group) }}
+              </span>
+            </p>
+          </div>
+          <button (click)="deleteGroup(group.groupId)" class="bg-red-500 text-white px-3 py-1 rounded text-sm">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

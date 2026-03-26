@@ -27,5 +27,13 @@ namespace ProfileBook.API.Models
         public string Role { get; set; } = "User";
 
         public string? ProfileImage { get; set; }
+
+        // Account creation and credential expiration tracking
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? LastLoginAt { get; set; }
+        public DateTime? CredentialsExpireAt { get; set; }
+        public bool IsActive { get; set; } = true;
+        public string? CreatedBy { get; set; } // Admin who created this user
+        public bool IsMainAdmin { get; set; } = false; // True only for the main admin - never expires
     }
 }
